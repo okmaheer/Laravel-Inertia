@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -18,8 +19,13 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 Route::get('/users', function () {
-    return Inertia::render('Users');
+    return Inertia::render('Users',[
+        'time' => now()->toTimeString()
+    ]);
 });
 Route::get('/settings', function () {
     return Inertia::render('Settings');
+});
+Route::post('/logout', function (Request $request) {
+dd($request->name); 
 });
