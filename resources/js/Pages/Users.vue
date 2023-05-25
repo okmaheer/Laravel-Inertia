@@ -4,7 +4,7 @@
 
         <div style="margin-top: 400px;">
             <p>
-                The current ime is {{ time }}
+                The current ime is {{ time }} 
             </p>
             <Link href="/users" class="text-blue-500" preserve-scroll>Refresh</Link>
         </div>
@@ -13,9 +13,9 @@
 
 <script>
 import Layout from '../Shared/Layout.vue'
-
+import { Link } from '@inertiajs/vue3';
 export default {
-    components: { Layout },
+    components: { Layout,Link },
     props: {
         time: String
     }
