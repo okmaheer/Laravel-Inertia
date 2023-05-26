@@ -19,10 +19,18 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Home');
 });
-Route::get('/users', function () {
-    $users =  User::select('id','name')->paginate(10);
+Route::get('/users', function (Request $request) {
+
+    $users =  User::query()
+    ->when($request->search, function($query,$search){
+     $query->where('name','like',"%{$search}%");
+    })
+    ->select('id','name')
+    ->paginate(10)
+    ->withQueryString();
     return Inertia::render('Users',[
-        'users' => $users
+        'users' => $users,
+        'filters' => $request->search,
     ]);
 });
 Route::get('/settings', function () {

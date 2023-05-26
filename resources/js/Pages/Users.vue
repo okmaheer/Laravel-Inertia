@@ -1,6 +1,10 @@
 <template>
     <Head title="Users" />
-    <h1 class="text-4xl font-bold mb-6">Users</h1>
+    <div class="flex justify-between mb-6">
+        <h1 class="text-3xl">Users</h1>
+
+        <input v-model="search" type="text" placeholder="Search..." class="border px-2 rounded-lg" />
+    </div>
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -20,8 +24,7 @@
 
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link :href="`/users/${user.id}/edit`" class="text-indigo-600 hover:text-indigo-900">
-                                    Edit
-                                    </Link>
+                                    Edit </Link>
                                 </td>
                             </tr>
                         </tbody>
@@ -35,8 +38,20 @@
 
 <script setup>
 import Pagination from "../Shared/Pagination.vue";
+import { ref, watch } from "vue";
+import { router } from '@inertiajs/vue3'
+let props = defineProps({
+    users: Array,
+    filters:String
+},);
+console.log(props.user)
+let search = ref(props.filters);
 
-defineProps({ users: Array });
-
+watch(search, value => {
+    router.get('/users', { search: value }, {
+        preserveState: true,
+        replace: true
+    })
+})
 
 </script>
